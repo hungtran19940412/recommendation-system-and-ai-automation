@@ -1,0 +1,46 @@
+collaborative_filtering:
+  matrix_factorization:
+    n_factors: 100
+    learning_rate: 0.001
+    regularization: 0.01
+    n_epochs: 20
+  als:
+    n_factors: 50
+    regularization: 0.1
+    iterations: 15
+  neural_cf:
+    embedding_dim: 64
+    layers: [128, 64, 32]
+    dropout: 0.2
+    learning_rate: 0.001
+
+content_based:
+  text_features:
+    vectorizer: "tfidf"
+    max_features: 5000
+    min_df: 2
+  image_features:
+    model: "resnet50"
+    output_dim: 512
+    batch_size: 32
+
+hybrid_model:
+  weights:
+    collaborative: 0.6
+    content_based: 0.4
+  ensemble_method: "weighted_average"
+
+training:
+  batch_size: 256
+  validation_split: 0.2
+  early_stopping_patience: 5
+  max_epochs: 100
+
+evaluation:
+  metrics:
+    - "precision@k"
+    - "recall@k"
+    - "ndcg"
+    - "map"
+  k_values: [5, 10, 20]
+  threshold: 0.85
